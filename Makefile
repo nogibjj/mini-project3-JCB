@@ -15,6 +15,9 @@ lint:
 	pylint --disable=R,C --ignore-patterns=test_.*?py *.py
 # container-lint
 
+plot:
+	python3 polars_descriptives.py
+
 # deploy
 
 all: install lint format test 

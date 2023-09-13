@@ -1,4 +1,4 @@
-name: ci-cd_actions
+name: Descriptive statistics
 on: 
   push:
     branches: ["main"]
@@ -23,4 +23,6 @@ jobs:
         run: make test
       - name: format
         run: make format
+      - name: run_main
+        run: make plot
       # deploy
