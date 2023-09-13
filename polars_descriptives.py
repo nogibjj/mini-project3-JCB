@@ -1,27 +1,10 @@
 import ccy_library
+import matplotlib.pyplot as plt
+from ccy_library import create_ticker
 
 
-def create_ticker(ccy):
-    ticker = ccy.upper() + "=X"
-    return ticker
-
-
-def plot_returns(
-    ccy_list=None, ccy_dict=None, column="Close", time_period=30
-):  # adapt this function to dfs
-    """It generates a plot of the currencies given.
-    1 - If ccy_list is given, data will be downloaded for every currency in the list.
-    2 - If ccy_dict is given, plots will be generated for every currency in dict.keys
-    """
-    if type(ccy_list) == str:
-        ccy_dict = create_currencies_dict(ccy_list, date_range(time_period=time_period))
-        pass
-    if type(ccy_list) == list:
-        ccy_dict = create_currencies_dict(ccy_list, date_range(time_period=time_period))
-    df = pd.DataFrame(columns=ccy_dict.keys())
-    for i in df.columns:
-        df[i] = ccy_dict[i][column]
-        pass
+def plot_returns(ccy_df, column="Close"):
+    df = ccy_df.loc[:, column]
     fig, ax = plt.subplots()
     for ccy in df.columns:
         ax.plot(df[ccy].pct_change())
@@ -34,7 +17,13 @@ def plot_returns(
     pass
 
 
-def print_range(ccy_df):  # adapt this code with multiindex headers?
+def single_ccy_df(ccy_df, ccy):
+    df = ccy_df.xs(create_ticker(ccy), level=1, axis=1)
+    df.name = ccy
+    return df
+
+
+def print_range(ccy_df):
     low = ccy_df.Low.min()
     high = ccy_df.High.max()
     close = ccy_df.Close[-1]
@@ -78,10 +67,3 @@ def print_range(ccy_df):  # adapt this code with multiindex headers?
         )
     )
     pass
-
-
-# adapt this function to create single currency df
-def create_df(ccy, ccy_dict):
-    df = pd.DataFrame(ccy_dict[ccy])
-    df.name = ccy
-    return df
