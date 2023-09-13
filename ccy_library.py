@@ -3,7 +3,7 @@ import datetime
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from download_currencies import download_monthly_prices
+from download_currencies import download_prices
 
 
 # def date_range(end_date=None, start_date=None, time_period=30):

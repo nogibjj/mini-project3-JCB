@@ -1,4 +1,3 @@
-from download_currencies import download_prices_1y
 import ccy_library
 
 
