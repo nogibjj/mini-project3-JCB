@@ -3,7 +3,6 @@ import datetime
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from download_currencies import download_prices
 
 
 # def date_range(end_date=None, start_date=None, time_period=30):
@@ -142,30 +141,3 @@ def print_range(ccy_df):  # adapt this code with multiindex headers?
 #         df[i] = ccy_dict[i][column]
 #         pass
 #     return df.describe()
-
-
-def plot_returns(
-    ccy_list=None, ccy_dict=None, column="Close", time_period=30
-):  # adapt this function to dfs
-    """It generates a plot of the currencies given.
-    1 - If ccy_list is given, data will be downloaded for every currency in the list.
-    2 - If ccy_dict is given, plots will be generated for every currency in dict.keys
-    """
-    if type(ccy_list) == str:
-        ccy_dict = create_currencies_dict(ccy_list, date_range(time_period=time_period))
-        pass
-    if type(ccy_list) == list:
-        ccy_dict = create_currencies_dict(ccy_list, date_range(time_period=time_period))
-    df = pd.DataFrame(columns=ccy_dict.keys())
-    for i in df.columns:
-        df[i] = ccy_dict[i][column]
-        pass
-    fig, ax = plt.subplots()
-    for ccy in df.columns:
-        ax.plot(df[ccy].pct_change())
-        pass
-    plt.legend(df.columns)
-    ax.set_ylabel("% change")
-    ax.set_xlabel("Date")
-    plt.xticks(rotation=45)
-    fig.suptitle("Currency returns")

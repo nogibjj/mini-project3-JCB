@@ -1,6 +1,15 @@
-import ccy_library
 import matplotlib.pyplot as plt
 from ccy_library import create_ticker
+import numpy as np
+import pandas as pd
+import polars as pl
+
+
+def import_csv(path):
+    """
+    Imports a csv file and returns a polars dataframe.
+    """
+    df = pl.read_csv(path)
 
 
 def plot_returns(ccy_df, column="Close"):

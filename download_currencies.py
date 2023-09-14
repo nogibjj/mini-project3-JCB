@@ -16,7 +16,7 @@ def create_tickers(ccy_list):
 def download_prices_long(tickers):
     data = yf.download(tickers, period="1mo", interval="60m")
     data.reset_index(inplace=True)
-    data.melt(
+    data = data.melt(
         id_vars="Datetime", var_name=["Price type", "Instrument"], value_name="Price"
     )
     data.to_csv("currency_prices_long.csv")
