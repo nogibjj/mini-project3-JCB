@@ -1,3 +1,4 @@
+![Currencies](https://github.com/nogibjj/mini-project3-jcb/actions/workflows/ci-cd_actions.yml/badge.svg)
 # Hourly data for diverse currencies
 
 ### IDS 706 mini-project 3
