@@ -16,7 +16,7 @@ lint:
 # container-lint
 
 plot:
-	python3 polars_descriptives.py
+	python3 polars_desc.py
 
 # deploy
 

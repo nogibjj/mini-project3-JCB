@@ -10,7 +10,9 @@ def read_data(path):
     """
     Read the data from the path specified.
     """
-    return pl.read_csv(path, try_parse_dates=True)
+    df = pl.read_csv(path, try_parse_dates=True)
+    df = df.drop_nulls()
+    return df
 
 
 def plot_returns(ccy_df, column="Close"):
@@ -37,6 +39,11 @@ def plot_returns(ccy_df, column="Close"):
 
 def print_range(ccy_df):
     tickers = ccy_df["Instrument"].unique()
+    print(
+        "Let's analyze the following currencies {}:\n".format(
+            [ccy[:6] for ccy in tickers]
+        )
+    )
     for ccy in tickers:
         ccy_reduced = ccy[:6]
         low = (
@@ -95,7 +102,7 @@ def print_range(ccy_df):
             + ccy_reduced
             + " reached a high of {} on {}".format(
                 round(high, 2),
-                ccy_df.filter(pl.col("Price") == high)["Datetime"]
+                ccy_df.filter(pl.col("Price") == high)[0]["Datetime"]
                 .item()
                 .strftime("%d %b %y"),
             )
@@ -107,4 +114,15 @@ def print_range(ccy_df):
                 round(average, 2), round(std_dev, 2)
             )
         )
-    pass
+        print(
+            ccy_df.filter(
+                (pl.col("Instrument") == ccy) & (pl.col("Price type") == "Close")
+            )["Price"].describe()
+        )
+
+
+if __name__ == "__main__":
+    df = read_data("currency_prices_long.csv")
+    print_range(df)
+    plot_returns(df)
+    plt.savefig("currency_returns.png")
