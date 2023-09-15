@@ -74,4 +74,4 @@ shape: (9, 2)
 │ 75%        ┆ 17.236    │
 │ max        ┆ 17.693001 │
 └────────────┴───────────┘
-
+![Currency returns](https://github.com/nogibjj/mini-project3-JCB/blob/main/currency_returns.png)
