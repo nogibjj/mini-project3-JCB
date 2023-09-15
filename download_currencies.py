@@ -1,5 +1,4 @@
 import yfinance as yf
-from ccy_library import create_ticker
 
 
 def download_prices(tickers):
@@ -8,8 +7,13 @@ def download_prices(tickers):
     pass
 
 
+def yf_ticker(ccy):
+    ticker = ccy.upper() + "=X"
+    return ticker
+
+
 def create_tickers(ccy_list):
-    tickers = [create_ticker(ticker) for ticker in ccy_list]
+    tickers = [yf_ticker(ticker) for ticker in ccy_list]
     return tickers
 
 
