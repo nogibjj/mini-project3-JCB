@@ -1,4 +1,5 @@
 import yfinance as yf
+import pandas as pd
 
 
 def yf_ticker(ccy):
@@ -13,6 +14,8 @@ def create_tickers(ccy_list):
 
 def download_prices_long(tickers):
     data = yf.download(tickers, period="1mo", interval="60m")
+    if len(tickers) == 1:
+        data.columns = [data.columns, pd.Series(tickers * len(data.columns))]
     data.reset_index(inplace=True)
     data = data.melt(
         id_vars="Datetime", var_name=["Price type", "Instrument"], value_name="Price"
