@@ -9,6 +9,7 @@ Additionally, I've added a script that performs descriptive analysis of those cu
 ### Here's an example that analyzes some key statistics in USDMXN, NZDUSD & EURUSD
 
 We ran the analysis between Aug 14, 2023 and Sep 14, 2023 and observed the following:
+
 EURUSD's current value is 1.07.
 Between 14/Aug/23 and 14/Sep/23:
 - EURUSD dropped -1.8%
