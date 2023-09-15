@@ -122,7 +122,7 @@ def print_range(ccy_df):
 
 
 if __name__ == "__main__":
-    df = read_data("currency_prices_long.csv")
-    print_range(df)
-    plot_returns(df)
+    currencies = read_data("currency_prices_long.csv")
+    print_range(currencies)
+    plot_returns(currencies)
     plt.savefig("currency_returns.png")
