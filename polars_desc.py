@@ -4,7 +4,7 @@ import polars as pl
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import matplotlib.ticker as mticker
-from download_currencies import yf_ticker, download_prices_long, create_tickers
+from download_currencies import download_prices_long, create_tickers
 
 
 def read_data(path):
