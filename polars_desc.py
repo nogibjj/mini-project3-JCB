@@ -33,3 +33,78 @@ def plot_returns(ccy_df, column="Close"):
     ax.yaxis.set_major_formatter(mticker.PercentFormatter(1.0))
     fig.suptitle("Currency returns")
     pass
+
+
+def print_range(ccy_df):
+    tickers = ccy_df["Instrument"].unique()
+    for ccy in tickers:
+        ccy_reduced = ccy[:6]
+        low = (
+            ccy_df.filter(
+                (pl.col("Instrument") == ccy) & (pl.col("Price type") == "Low")
+            )
+            .min()["Price"]
+            .item()
+        )
+        high = (
+            ccy_df.filter(
+                (pl.col("Instrument") == ccy) & (pl.col("Price type") == "High")
+            )
+            .max()["Price"]
+            .item()
+        )
+        close = ccy_df.filter(
+            (pl.col("Instrument") == ccy) & (pl.col("Price type") == "Close")
+        )[-1]["Price"].item()
+        ccy_open = ccy_df.filter(
+            (pl.col("Instrument") == ccy) & (pl.col("Price type") == "Open")
+        )[0]["Price"].item()
+        average = ccy_df.filter(
+            (pl.col("Instrument") == ccy) & (pl.col("Price type") == "Close")
+        )["Price"].mean()
+        std_dev = ccy_df.filter(
+            (pl.col("Instrument") == ccy) & (pl.col("Price type") == "Close")
+        )["Price"].std()
+        print(ccy_reduced + "'s current value is {}.".format(round(close, 2)))
+        print(
+            "Between {} and {}:".format(
+                ccy_df["Datetime"].min().strftime("%d/%b/%y"),
+                ccy_df["Datetime"].max().strftime("%d/%b/%y"),
+            )
+        )
+        print(
+            "- "
+            + ccy_reduced
+            + " {} {}%".format(
+                "dropped" if close < ccy_open else "rose",
+                round((close / ccy_open - 1) * 100, 2),
+            )
+        )
+        print(
+            "- "
+            + ccy_reduced
+            + " reached a low of {} on {}".format(
+                round(low, 2),
+                ccy_df.filter(pl.col("Price") == low)[0]["Datetime"]
+                .item()
+                .strftime("%d %b %y"),
+            )
+        )
+        print(
+            "- "
+            + ccy_reduced
+            + " reached a high of {} on {}".format(
+                round(high, 2),
+                ccy_df.filter(pl.col("Price") == high)["Datetime"]
+                .item()
+                .strftime("%d %b %y"),
+            )
+        )
+        print(
+            "- "
+            + ccy_reduced
+            + " had an average and standard deviation of {} and {} over the period.".format(
+                round(average, 2), round(std_dev, 2)
+            )
+        )
+    pass
