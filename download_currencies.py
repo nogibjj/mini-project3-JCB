@@ -1,12 +1,6 @@
 import yfinance as yf
 
 
-def download_prices(tickers):
-    data = yf.download(tickers, period="1mo", interval="60m")
-    data.to_csv("currency_prices.csv")
-    pass
-
-
 def yf_ticker(ccy):
     ticker = ccy.upper() + "=X"
     return ticker
